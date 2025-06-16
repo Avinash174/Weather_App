@@ -1,67 +1,35 @@
 package com.example.weather_app.Adapter;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weather_app.Adapter.TommorrowAdapter;
 import com.example.weather_app.Domins.TommorrowDomain;
 import com.example.weather_app.R;
 
 import java.util.ArrayList;
 
-public class TommorowActivity extends RecyclerView.Adapter<TommorowActivity.ViewHolder> {
+public class TommorowActivity extends AppCompatActivity {
 
-    private ArrayList<TommorrowDomain> items;
-    private Context context;
-
-    public TommorowActivity(ArrayList<TommorrowDomain> items, Context context) {
-        this.items = items;
-        this.context = context;
-    }
-
-    @NonNull
-    @Override
-    public TommorowActivity.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.viewholder_tommorrow, parent, false);
-        return new ViewHolder(view);
-    }
+    private RecyclerView recyclerView;
+    private TommorrowAdapter adapter;
 
     @Override
-    public void onBindViewHolder(@NonNull TommorowActivity.ViewHolder holder, int position) {
-        TommorrowDomain item = items.get(position);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.tommorow_activity); // ✅ Fixed bracket
 
-        holder.dayText.setText(item.getDay());
-        holder.statusText.setText(item.getStatus());
-        holder.lowText.setText(String.valueOf(item.getMinTemp()));
-        holder.highText.setText(String.valueOf(item.getMaxTemp()));
+        recyclerView = findViewById(R.id.view2);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        int imageResId = context.getResources()
-                .getIdentifier(item.getPicPath(), "drawable", context.getPackageName());
-        holder.icon.setImageResource(imageResId);
-    }
+        ArrayList<TommorrowDomain> items = new ArrayList<>();
+        items.add(new TommorrowDomain("Monday", "cloud", 25, 18, "Cloudy"));
+        items.add(new TommorrowDomain("Tuesday", "sun", 27, 19, "Sunny"));
+        items.add(new TommorrowDomain("Wednesday", "rain", 22, 17, "Rainy"));
 
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView dayText, statusText, lowText, highText;
-        ImageView icon;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            dayText = itemView.findViewById(R.id.dayTxt);
-            statusText = itemView.findViewById(R.id.status_txt);
-            lowText = itemView.findViewById(R.id.lowTxt);
-            highText = itemView.findViewById(R.id.textView3);
-            icon = itemView.findViewById(R.id.pic);
-        }
+        adapter = new TommorrowAdapter(items);
+        recyclerView.setAdapter(adapter);
     }
 }

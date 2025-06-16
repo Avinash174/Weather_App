@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         next7daysBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Launch TommorowActivity from correct package
                 startActivity(new Intent(MainActivity.this, TommorowActivity.class));
             }
         });
