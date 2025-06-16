@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weather_app.Adapter.HourlyAdapter;
+import com.example.weather_app.Adapter.TommorowActivity;
 import com.example.weather_app.Domins.Hourly;
 import com.example.weather_app.R;
 
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setVariable() {
-        TextView next7daysBtn=findViewById(R.id.nextTxtBtn);
+        TextView next7daysBtn = findViewById(R.id.nextTxtBtn);
         next7daysBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

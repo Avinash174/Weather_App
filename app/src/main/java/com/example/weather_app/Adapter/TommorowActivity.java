@@ -1,5 +1,6 @@
 package com.example.weather_app.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,32 +15,34 @@ import com.example.weather_app.R;
 
 import java.util.ArrayList;
 
-public class TommorrowAdapter extends RecyclerView.Adapter<TommorrowAdapter.ViewHolder> {
+public class TommorowActivity extends RecyclerView.Adapter<TommorowActivity.ViewHolder> {
 
     private ArrayList<TommorrowDomain> items;
+    private Context context;
 
-    public TommorrowAdapter(ArrayList<TommorrowDomain> items) {
+    public TommorowActivity(ArrayList<TommorrowDomain> items, Context context) {
         this.items = items;
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.viewholder_tommorrow, parent, false);
+    public TommorowActivity.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.viewholder_tommorrow, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TommorrowAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TommorowActivity.ViewHolder holder, int position) {
         TommorrowDomain item = items.get(position);
 
         holder.dayText.setText(item.getDay());
         holder.statusText.setText(item.getStatus());
-        holder.tempText.setText(item.getMaxTemp() + "°/" + item.getMinTemp() + "°");
+        holder.lowText.setText(String.valueOf(item.getMinTemp()));
+        holder.highText.setText(String.valueOf(item.getMaxTemp()));
 
-        int imageResId = holder.itemView.getContext().getResources()
-                .getIdentifier(item.getPicPath(), "drawable", holder.itemView.getContext().getPackageName());
+        int imageResId = context.getResources()
+                .getIdentifier(item.getPicPath(), "drawable", context.getPackageName());
         holder.icon.setImageResource(imageResId);
     }
 
@@ -48,15 +51,16 @@ public class TommorrowAdapter extends RecyclerView.Adapter<TommorrowAdapter.View
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView dayText, statusText, tempText;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView dayText, statusText, lowText, highText;
         ImageView icon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             dayText = itemView.findViewById(R.id.dayTxt);
             statusText = itemView.findViewById(R.id.status_txt);
-            tempText = itemView.findViewById(R.id.lowTxt);
+            lowText = itemView.findViewById(R.id.lowTxt);
+            highText = itemView.findViewById(R.id.textView3);
             icon = itemView.findViewById(R.id.pic);
         }
     }
